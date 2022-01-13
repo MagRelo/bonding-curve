@@ -4,6 +4,14 @@ import React, { useState } from "react";
 import { Address, AddressInput } from "../components";
 import { useTokenList } from "../hooks";
 
+const highlight = {
+  marginLeft: 4,
+  marginRight: 8,
+  /* backgroundColor: "#f9f9f9", */ padding: 4,
+  borderRadius: 4,
+  fontWeight: "bolder",
+};
+
 const { Option } = Select;
 
 export default function Hints({ yourLocalBalance, mainnetProvider, price, address }) {
@@ -264,6 +272,88 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
       </div>
       <div style={{ padding: 128 }}>
         🛠 Check out your browser&apos;s developer console for more... (inspect console) 🚀
+      </div>
+
+      <div style={{ margin: "auto", marginTop: 32 }}>
+        You will find that parsing/tracking events with the{" "}
+        <span className="highlight" style={highlight}>
+          useEventListener
+        </span>{" "}
+        hook becomes a chore for every new project.
+      </div>
+      <div style={{ margin: "auto", marginTop: 32 }}>
+        Instead, you can use{" "}
+        <a href="https://thegraph.com/docs/introduction" target="_blank" rel="noopener noreferrer">
+          The Graph
+        </a>{" "}
+        with 🏗 scaffold-eth (
+        <a href="https://youtu.be/T5ylzOTkn-Q" target="_blank" rel="noopener noreferrer">
+          learn more
+        </a>
+        ):
+      </div>
+
+      <div style={{ margin: 32 }}>
+        <span style={{ marginRight: 8 }}>🚮</span>
+        Clean up previous data:
+        <span className="highlight" style={highlight}>
+          yarn clean-graph-node
+        </span>
+      </div>
+
+      <div style={{ margin: 32 }}>
+        <span style={{ marginRight: 8 }}>📡</span>
+        Spin up a local graph node by running
+        <span className="highlight" style={highlight}>
+          yarn run-graph-node
+        </span>
+        <span style={{ marginLeft: 4 }}>
+          {" "}
+          (requires{" "}
+          <a href="https://www.docker.com/products/docker-desktop" target="_blank" rel="noopener noreferrer">
+            {" "}
+            Docker
+          </a>
+          ){" "}
+        </span>
+      </div>
+
+      <div style={{ margin: 32 }}>
+        <span style={{ marginRight: 8 }}>📝</span>
+        Create your <b>local subgraph</b> by running
+        <span className="highlight" style={highlight}>
+          yarn graph-create-local
+        </span>
+        (only required once!)
+      </div>
+
+      <div style={{ margin: 32 }}>
+        <span style={{ marginRight: 8 }}>🚢</span>
+        Deploy your <b>local subgraph</b> by running
+        <span className="highlight" style={highlight}>
+          yarn graph-ship-local
+        </span>
+      </div>
+
+      <div style={{ margin: 32 }}>
+        <span style={{ marginRight: 8 }}>🖍️</span>
+        Edit your <b>local subgraph</b> in
+        <span className="highlight" style={highlight}>
+          packages/subgraph/src
+        </span>
+        (learn more about subgraph definition{" "}
+        <a href="https://thegraph.com/docs/define-a-subgraph" target="_blank" rel="noopener noreferrer">
+          here
+        </a>
+        )
+      </div>
+
+      <div style={{ margin: 32 }}>
+        <span style={{ marginRight: 8 }}>🤩</span>
+        Deploy your <b>contracts and your subgraph</b> in one go by running
+        <span className="highlight" style={highlight}>
+          yarn deploy-and-graph
+        </span>
       </div>
     </div>
   );

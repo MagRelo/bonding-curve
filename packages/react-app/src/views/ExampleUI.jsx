@@ -3,8 +3,8 @@ import { utils } from "ethers";
 import { Button, Card, DatePicker, Divider, Input, List, Progress, Slider, Spin, Switch } from "antd";
 import React, { useState } from "react";
 import { Address, Balance } from "../components";
-import { useContractReader, useNonce } from '../hooks/index';
-import { EtherInput, AddressInput } from '../components/index';
+import { useContractReader, useNonce } from "../hooks/index";
+import { EtherInput, AddressInput } from "../components/index";
 import { parseEther, formatEther } from "@ethersproject/units";
 
 export default function ExampleUI({
@@ -19,19 +19,18 @@ export default function ExampleUI({
   readContracts,
   writeContracts,
 }) {
-  const [toAddress, setToAddress] = useState('')
+  const [toAddress, setToAddress] = useState("");
   const [amount, setAmount] = useState(0);
 
   // keep track of a variable from the contract in the local React state:
-  const yourBalance = useContractReader(readContracts, "Smile", "balanceOf", [address])
-  console.log("🤗 balance:", yourBalance)
+  const yourBalance = useContractReader(readContracts, "PriorityPricing", "balanceOf", [address]);
+  console.log("🤗 balance:", yourBalance);
 
-  const lockedBalance = useContractReader(readContracts, "Smile", "reserveBalance")
-  console.log("locked balance:", lockedBalance)
+  const lockedBalance = useContractReader(readContracts, "PriorityPricing", "reserveBalance");
+  console.log("locked balance:", lockedBalance);
 
-  const yourLockedBalance = useContractReader(readContracts, "Smile", "userLockedBalance", [address])
-  console.log("your locked balance:", yourLockedBalance)
-
+  const yourLockedBalance = useContractReader(readContracts, "PriorityPricing", "userLockedBalance", [address]);
+  console.log("your locked balance:", yourLockedBalance);
 
   let nonce = useNonce(localProvider, address);
   return (
@@ -42,7 +41,7 @@ export default function ExampleUI({
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
         <h2>😃 Token on a Bonding Curve </h2>
 
-        <h4>Your 😃 Balance: {yourBalance ? formatEther(yourBalance) : 0}</h4>
+        <h4>Your Balance: {yourBalance ? formatEther(yourBalance) : 0}</h4>
 
         <h4>Your Locked ETH: {yourLockedBalance ? formatEther(yourLockedBalance) : 0}</h4>
 
@@ -61,13 +60,17 @@ export default function ExampleUI({
           <br />
           <br />
 
-          <Button onClick={() => {
-                tx(writeContracts.Smile.mint({ value: parseEther(amount) }))
-          }}>Mint</Button>
+          <Button
+            onClick={() => {
+              tx(writeContracts.PriorityPricing.mint({ value: parseEther(amount) }));
+            }}
+          >
+            Mint
+          </Button>
         </div>
 
         <br />
-          <br />
+        <br />
         <div style={{ margin: 8 }}>
           <EtherInput
             price={price}
@@ -79,13 +82,17 @@ export default function ExampleUI({
           />
           <br />
           <br />
-          <Button onClick={() => {
-            /* look how you call setPurpose on your contract: */
-            tx(writeContracts.Smile.burn(parseEther(amount)))
-          }}>Burn</Button>
+          <Button
+            onClick={() => {
+              /* look how you call setPurpose on your contract: */
+              tx(writeContracts.PriorityPricing.burn(parseEther(amount)));
+            }}
+          >
+            Burn
+          </Button>
         </div>
         <br />
-          <br />
+        <br />
         <div style={{ margin: 8 }}>
           <AddressInput
             autoFocus
@@ -94,7 +101,7 @@ export default function ExampleUI({
             value={toAddress}
             onChange={setToAddress}
           />
-                    <br />
+          <br />
           <EtherInput
             price={price}
             value={amount}
@@ -104,12 +111,15 @@ export default function ExampleUI({
           />
           <br />
           <br />
-          <Button onClick={() => {
-            console.log(amount)
-            console.log(toAddress)
-            /* look how you call setPurpose on your contract: */
-            tx(writeContracts.Smile.transfer(toAddress, parseEther(amount)))
-          }}>Transfer </Button>
+          <Button
+            onClick={() => {
+              console.log(amount);
+              console.log(toAddress);
+              tx(writeContracts.PriorityPricing.transfer(toAddress, parseEther(amount)));
+            }}
+          >
+            Transfer{" "}
+          </Button>
         </div>
       </div>
 

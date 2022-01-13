@@ -1,1 +1,1 @@
-module.exports = ["MockDai","YourContract"];
+module.exports = ["MockDai", "PriorityPricing"];

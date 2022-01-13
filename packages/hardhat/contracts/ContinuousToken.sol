@@ -13,7 +13,7 @@ abstract contract ContinuousToken is Ownable, ERC20, BancorBondingCurve {
     using SafeMath for uint;
 
     event Minted(address sender, uint amount, uint deposit);
-    event Burned(address sender, uint amount, uint refund);
+    event Burned(address sender, uint amount, uint refund, address owner);
 
     constructor(
         string memory _name,
@@ -37,18 +37,18 @@ abstract contract ContinuousToken is Ownable, ERC20, BancorBondingCurve {
         return rewardAmount;
     }
 
-    function _continuousBurn(uint _amount) internal returns (uint) {
+    function _continuousBurn(uint _amount, address owner) internal returns (uint) {
         require(_amount > 0, "Amount must be non-zero.");
         require(balanceOf(msg.sender) >= _amount, "Insufficient tokens to burn.");
 
         uint refundAmount = getContinuousBurnRefund(_amount);
         _burn(msg.sender, _amount);
-        emit Burned(msg.sender, _amount, refundAmount);
+        emit Burned(msg.sender, _amount, refundAmount, owner);
         return refundAmount;
     }
 
-    function sponsoredBurn(uint _amount) public {
+    function sponsoredBurn(uint _amount, address owner) public {
         _burn(msg.sender, _amount);
-        emit Burned(msg.sender, _amount, 0);
+        emit Burned(msg.sender, _amount, 0, owner);
     }   
 }

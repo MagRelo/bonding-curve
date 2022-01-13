@@ -3,3 +3,18 @@ type User @entity {
   reserveBalance: BigDecimal!
   bondingCurveTokenBalance: BigDecimal!
 }
+
+type Spend @entity {
+  id: ID!
+  from: String!
+  to: String!
+  value: BigDecimal!
+}
+
+type Withdraw @entity {
+  id: ID!
+  sender: String!
+  amount: BigDecimal!
+  refund: BigDecimal!
+  burnType: String!
+}

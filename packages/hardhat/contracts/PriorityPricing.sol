@@ -4,13 +4,20 @@ import "./ContinuousToken.sol";
 import '@openzeppelin/contracts/math/SafeMath.sol';
 
 
-contract Smile is ContinuousToken {
+contract PriorityPricing is ContinuousToken {
     using SafeMath for uint;
     uint256 internal reserve;
 
     mapping(address => uint) public userLockedBalance;
   
-    constructor() public payable ContinuousToken("Smile", "😃", 100 ether, 300000) {
+    // "mlovan", "$mlovan", 10000 ether, 300000
+    constructor(string memory _name,
+        string memory _symbol,
+        uint _initialSupply,
+        uint32 _reserveRatio) public payable ContinuousToken(_name,
+        _symbol,
+        _initialSupply,
+         _reserveRatio) {
         reserve = msg.value;
         userLockedBalance[msg.sender] = userLockedBalance[msg.sender].add(msg.value);
     }
@@ -27,7 +34,8 @@ contract Smile is ContinuousToken {
     }
 
     function burn(uint _amount) public {
-        uint refundAmount = _continuousBurn(_amount);
+        address ownerAddress = owner();
+        uint refundAmount = _continuousBurn(_amount, ownerAddress);
         userLockedBalance[msg.sender] = userLockedBalance[msg.sender].sub(refundAmount);
         reserve = reserve.sub(refundAmount);
         msg.sender.transfer(refundAmount);
